@@ -17,7 +17,6 @@ public class aa {
 		
 		Scanner snScanner=new Scanner(System.in);
 		int choix;
-		Vector<Livre> Temp;
 		boolean Bar=false;
 		System.out.println("donner le nombre maximum des livres de la biblio ");
 		Biblio biblio=new Biblio(Integer.parseInt(snScanner.nextLine()));
