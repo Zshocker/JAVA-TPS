@@ -8,7 +8,7 @@ public class EssaiTri {
         Scanner SN=new Scanner(System.in);
         String buffer; 
         TriSimple Tableau; 
-        System.out.println("Donner la taille et l'increment(si vide les valeur sont pris par defaut):");
+        System.out.println("Donner la taille et le nombre incriment (10 , 5 par defaut):");
         buffer = SN.nextLine();
         if(buffer.equals(""))
         {

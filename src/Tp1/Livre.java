@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import java.util.Scanner;
 
-public class Livre {
-
+public class Livre implements java.io.Serializable{
+private static final long serialVersionUID = 2L;
 private String titre;
 private String[] auteurs;
 private String iSBN;

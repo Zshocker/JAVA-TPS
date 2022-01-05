@@ -41,26 +41,15 @@ public class TriSimple {
         if(Tab.length<=nbElem+2)
         {
             Tab=Arrays.copyOf(Tab,Tab.length+increment);
-            /*int temp[]=Tab.clone();
-            Tab=new int[Tab.length+increment];
-            copy_Elems(temp);*/
+            
         }
     }
-    /*
-    private void copy_Elems(int[] temp){
-        for (int i = 0; i < temp.length; i++) {
-            Tab[i]=temp[i];
-        }
-    }
-    */
+    
     private void check_Decr() 
     {
         int Esp=Tab.length-nbElem;
         if(Esp>=increment*2){
             Tab=Arrays.copyOf(Tab,Tab.length-increment);
-           /*int temp[]=Tab.clone();
-            Tab=new int[Tab.length-increment];
-            copy_Elems(temp);*/
         }
     }
     private void Remove_ind(int ind)

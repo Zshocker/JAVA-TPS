@@ -7,7 +7,7 @@ public class aa {
 		StringBuffer sBuffer=new StringBuffer();
 		
 		for (Livre livre : lisLivres) {
-			sBuffer.append("----------------");
+			sBuffer.append("\n----------------");
 			sBuffer.append(livre.toString());
 			sBuffer.append("----------------");
 		}
@@ -18,8 +18,7 @@ public class aa {
 		Scanner snScanner=new Scanner(System.in);
 		int choix;
 		boolean Bar=false;
-		System.out.println("donner le nombre maximum des livres de la biblio ");
-		Biblio biblio=new Biblio(Integer.parseInt(snScanner.nextLine()));
+		Biblio biblio=Biblio.readBiblio("Biblio",snScanner);
 		System.out.println("1-afficher la capacite de la biblio ");
 		System.out.println("2-afficher le nombre des livres dans la biblio ");
 		System.out.println("3-ajouter un livre");
@@ -50,6 +49,7 @@ public class aa {
 					aa.Print_Vec(biblio.chercher(temp));
 				 	break;	
 				default:
+					biblio.WriteBiblio("Biblio");
 					Bar=true;
 					break;
 			}

@@ -1,9 +1,64 @@
 package Tp1;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Scanner;
 import java.util.Vector;
 
-public class Biblio {
-
+public class Biblio implements java.io.Serializable 
+{
+	private static final long serialVersionUID = 1L;
+	public static Biblio readBiblio(String fichier,Scanner snScanner) {
+		ObjectInputStream ne=null;
+		FileInputStream fileInputStream=null;
+		Biblio B=null;
+		try {
+			fileInputStream=new FileInputStream(fichier);
+			ne=new ObjectInputStream(fileInputStream);
+			B=(Biblio)ne.readObject();
+		}
+		catch (FileNotFoundException e) {
+		}
+		catch (Exception e) {
+		} finally {
+			try {
+				if (fileInputStream!=null) {
+					fileInputStream.close();
+					ne.close();
+				}
+			} 
+			catch (IOException e) {
+			}
+		}
+		if(B==null) {
+			 snScanner=new Scanner(System.in);
+			System.out.println("aucune instance est trouver dans le fichier \n donner le nombre maximum des livres de la biblio ");
+			B=new Biblio(Integer.parseInt(snScanner.nextLine()));
+		}
+		return  B;
+	}
+	
+	public void WriteBiblio(String ficher)
+	{
+		ObjectOutputStream OS=null;
+		try {
+			OS=new ObjectOutputStream(new FileOutputStream(ficher));
+			OS.writeObject(this);
+			OS.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				OS.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	private Vector<Livre> lisLivres=new Vector<Livre>();
 	private int numMax;
 	public Biblio(int numMax) 
@@ -34,7 +89,7 @@ public class Biblio {
 		StringBuffer sBuffer=new StringBuffer();
 		
 		for (Livre livre : lisLivres) {
-			sBuffer.append("----------------");
+			sBuffer.append("\n----------------\n");
 			sBuffer.append(livre.toString());
 			sBuffer.append("\n----------------");
 		}
