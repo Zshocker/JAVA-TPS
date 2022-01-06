@@ -33,6 +33,7 @@ public class TriSimple {
                     break;
                 }
             }
+            
             nbElem--;
             check_Decr();
         }

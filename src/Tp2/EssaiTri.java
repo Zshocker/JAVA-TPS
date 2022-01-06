@@ -8,7 +8,7 @@ public class EssaiTri {
         Scanner SN=new Scanner(System.in);
         String buffer; 
         TriSimple Tableau; 
-        System.out.println("Donner la taille et le nombre incriment (10 , 5 par defaut):");
+        System.out.println("Donner la taille et le nombre increment (10 , 5 par defaut):");
         buffer = SN.nextLine();
         if(buffer.equals(""))
         {
@@ -27,7 +27,7 @@ public class EssaiTri {
             }
             Tableau=new TriSimple(cap,incr);
         }
-        System.out.println("la lettre c pour afficher le tableau \nla lettre a suivie de données à insérer\nla lettre s suivie de données à supprimer\nla lettre q pour quitter");
+        System.out.println("la lettre c pour afficher le tableau \nla lettre a suivie de donnees as inserer\nla lettre s suivie de donnees a supprimer\nla lettre q pour quitter");
         do 
         {
             buffer = SN.next();
@@ -36,9 +36,15 @@ public class EssaiTri {
                 System.out.println(Tableau);
             }else if(buffer.equals("a")||buffer.equals("s"))
             {
-                int elem =SN.nextInt();
-                if(buffer.equals("a"))Tableau.inserer(elem);
-                else Tableau.supprimer(elem);
+            	 int elem;
+            	try {
+            		elem =SN.nextInt();
+                    if(buffer.equals("a"))Tableau.inserer(elem);
+                    else Tableau.supprimer(elem);
+				} catch (NumberFormatException e) {
+					  System.out.println("Error n'est pas un nombre");
+					  
+				}  
             }
         } while (true); 
         SN.close();

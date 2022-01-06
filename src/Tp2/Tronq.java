@@ -34,8 +34,9 @@ public class Tronq {
                 i=i+2;
             }
             return; 
-        }else if(args.length==0){
-            System.out.println("Donner des argument");
+        }else if(args.length==0)
+        {
+            System.out.println("Donner des arguments");
         }
         System.out.println("Erreur un argument monque");
     }

@@ -44,14 +44,21 @@ public boolean IsOfAutor(String aut)
  public static Livre creaLivre(Scanner Se) 
  {
 	 String titre,ISNB,temp;
-	 double prix;
+	 double prix=-1;
 	 Vector<String> tempStrings=new Vector<String>();
 	 System.out.print("\nDonner le titre :");
 	 titre=Se.nextLine();
 	 System.out.print("Donner le ISBN :");
 	 ISNB=Se.nextLine();
+	 do {
 	 System.out.print("Donner le prix :");
-	 prix=Double.parseDouble( Se.nextLine());
+	 try {
+		 prix=Double.parseDouble( Se.nextLine());
+	} catch (NumberFormatException e) {
+		 System.out.println("Error n'est pas un nombre");
+		 
+	}
+	 }while(prix==-1);
 	 do
 		{
 		 System.out.print("Entrer un auteur (ligne vide = fin):");

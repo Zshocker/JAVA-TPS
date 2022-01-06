@@ -7,9 +7,9 @@ public class aa {
 		StringBuffer sBuffer=new StringBuffer();
 		
 		for (Livre livre : lisLivres) {
-			sBuffer.append("\n----------------");
+			sBuffer.append("\n----------------\n");
 			sBuffer.append(livre.toString());
-			sBuffer.append("----------------");
+			sBuffer.append("\n----------------\n");
 		}
 		System.out.print(sBuffer);
 	}
@@ -27,9 +27,16 @@ public class aa {
 		System.out.println("other-exit");
 		do 
 		{
+			choix=5000;
 			System.out.println("donner votre choix :");
-			choix=Integer.parseInt(snScanner.nextLine());
+			try {
+				choix=Integer.parseInt(snScanner.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Error n'est pas un nombre");
+			}
 			switch (choix) {
+			case 5000:
+				break;
 				case 1:
 					System.out.println(biblio.capacity());
 					break;
