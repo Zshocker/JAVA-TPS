@@ -17,6 +17,14 @@ public class Chambre implements Comparable {
         this.Prix = Prix;
     } 
 
+    public Chambre(int num, int cate, int capacity, double Prix, char etat) {
+        this.num = num;
+        this.cate = cate;
+        this.capacity = capacity;
+        this.Prix = Prix;
+        this.etat = etat;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -44,6 +52,9 @@ public class Chambre implements Comparable {
         o.writeInt(cate);
         o.writeInt(capacity);
         o.writeDouble(Prix);
+        o.writeChar(etat);
     }
-    
+    public Boolean Test_num(int num){
+        return num==this.num;
+    }
 }
