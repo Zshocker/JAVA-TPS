@@ -69,8 +69,7 @@ public class Hotel {
     public void Remplire_Tableau(int numbreC){
         System.out.println("\nRemplire le Tableau: ");
         for (int i = 0; i < numbreC; i++) {
-			System.out.println("\n--------------------------------------------------------\n");
-            TabC.add(Create_chambre());
+			this.Ajouter_Room();
         }
     }
     public Hotel(String nomFichier)
@@ -119,12 +118,13 @@ public class Hotel {
         fichier=nomFich;
         File F=new File(fichier);
         DataInputStream out=null;
-        try {
-
+        try 
+        {
             out=new DataInputStream(new FileInputStream(F));
             int NombreE=out.readInt();
             TabC.clear();
-            for (int j = 0; j < NombreE; j++) { 
+            for (int j = 0; j < NombreE; j++) 
+            { 
                 int num=out.readInt();
                 int cate=out.readInt();
                 int capacity=out.readInt();
@@ -135,7 +135,8 @@ public class Hotel {
         }
         catch (FileNotFoundException e) 
         {
-        } catch (IOException e) {
+        } catch (IOException e) 
+        {
         }finally
         {
             try {
@@ -156,18 +157,208 @@ public class Hotel {
         }
         WriteINDoc();
     }
-    public void Ajouter_Room()
+    private void Ajouter_Room()
     {
         System.out.println("\n--------------------------------------------------------\n");
-        TabC.add(Create_chambre());
+        do {
+            Chambre Be=Create_chambre();
+            if(TabC.indexOf(Be)==-1)
+            {
+                TabC.add(Be);
+                break;
+            }
+            else System.out.println("le numero du chambre deja existe !");
+        } while (true);
+    }
+    public void Ajouter_Chambre()
+    {
+        Ajouter_Room();
         WriteINDoc();
     }
-    public static void main(String[] args) {
+    public void modification_chambre(int chambre,char etat)
+    {
+        for (Chambre chambre2 : TabC) {
+            if(chambre2.Test_num(chambre))
+            {
+                if(etat=='L') chambre2.set_libre();
+                else chambre2.set_ocuper();
+                return;
+            }
+        }
+    }
+    public void To_another_file(String FileName,int cat)
+    {
+        WriteINDoc();
+        ArrayList<Chambre> tab=new ArrayList<Chambre>();
+        for (Chambre C : TabC) { 
+            if(C.TestCat(cat)){
+                tab.add(C);
+            }
+        }
+        this.TabC=tab;
+        this.fichier=FileName;
+        this.WriteINDoc();
+        this.Read_file("chambres.dat");
+    }
+    public ArrayList<Chambre> chambres_Libre(){
+        ArrayList<Chambre> tab=new ArrayList<Chambre>();
+        for (Chambre C : TabC) { 
+            if(C.is_libre()){
+                tab.add(C);
+            }
+        }
+        return tab;
+    }
+    public double Recette_max()
+    {
+        double somme=0;
+        for(Chambre ch : TabC)
+        {
+            somme +=ch.Get_prix();
+        }
+        return somme;
+    }
+    public double Rectte_Jour()
+    {
+        double s=0;
+        for (Chambre chambre : TabC) {
+            if(!chambre.is_libre())
+            {
+                s+=chambre.Get_prix();
+            }
+        }
+        return s;
+    }
+    public static void afficher_Liste(ArrayList<Chambre> chambres){
+        for (Chambre C : chambres) { 
+            System.out.println("\n--------------------------------------------------------\n");
+            System.out.println(C);
+        }
+    }
+    public static void main(String[] args) 
+    {
         Hotel E=new Hotel("chambres.dat");
-        //E.Ajouter_Room();
-        E.Trier();
-        E.Delete_Room(1);
-        E.Read_file("chambres.dat");
-        E.Afficher_Cat(1);
+        System.out.println("1-Afficher les chambres par categorie");
+		System.out.println("2-Trier les chambres");
+		System.out.println("3-Ajouter une Chambre");
+		System.out.println("4-Ajouter plusieur chambres");
+		System.out.println("5-Supprimer une chambre");
+		System.out.println("6-Modifier l'etat d'une chambre");
+		System.out.println("7-Changer du fichier");
+		System.out.println("8-Afficher la liste des chambres libre");
+		System.out.println("9-Calculer la recette maximale journalière");
+		System.out.println("10-Calculer la recette réelle du jour");
+		System.out.println("11-Copier toutes les chambres d'une catégorie données vers un fichier séquentiel.");
+		System.out.println("12-sauvgarder");
+		System.out.println("other-exit");
+        int choix;
+        int temp;
+        char temp2;
+        do{
+            choix=5000;
+			System.out.println("donner votre choix :");
+			try {
+				choix=Integer.parseInt(Sn.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Error n'est pas un nombre");
+			}
+            switch (choix) 
+            {
+                case 5000:
+                    break;
+                case 1:
+                    System.out.println("donner la categorie:");
+                    do{
+                    try {
+                            temp=Integer.parseInt(Sn.nextLine());
+                            E.Afficher_Cat(temp);
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }
+                    }while(true);
+                    break;
+                 case 2:
+                 E.Trier();
+                 break;
+                 case 3:
+                 E.Ajouter_Chambre();
+                 break;
+
+                 case 4:
+                      System.out.println("donner le nombre des chambres:");
+                    do{
+                    try {
+                            temp=Integer.parseInt(Sn.nextLine());
+                            E.Remplire_Tableau(temp);
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }
+                    }while(true);
+                 
+                 break;
+                 case 5:
+                    System.out.println("donner le numero du chambre a supprimer:");
+                    do{
+                    try {
+                            temp=Integer.parseInt(Sn.nextLine());
+                            E.Delete_Room(temp);
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }
+                    }while(true);
+                 break;
+                 case 6:
+                    System.out.println("donner le numero du chambre a modifier:");
+                    do{
+                    try {
+                            temp=Integer.parseInt(Sn.nextLine());  
+                            break;   
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }
+                    }while(true);
+                    System.out.println("donner l'etat du chambre a modifier:");
+                    temp2=Sn.nextLine().charAt(0);
+                    E.modification_chambre(temp, temp2);
+                    break;
+                 case 7:
+                    System.out.println("donner le nom du fichier:");
+                    E.Read_file(Sn.nextLine());
+                 break;
+                 case 8:
+                 afficher_Liste(E.chambres_Libre());
+                 break;
+                 case 9:
+                 System.out.println(E.Recette_max());
+                 break;
+                 case 10:
+                 System.out.println(E.Rectte_Jour());
+                 break;
+                 case 11:
+                 System.out.println("donner la categorie:");
+                    do{
+                    try {
+                            temp=Integer.parseInt(Sn.nextLine());
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }
+                    }while(true);
+                    System.out.println("donner le nom du fichier:");
+                    E.To_another_file(Sn.nextLine(), temp);
+                 break;
+                 case 12:
+                    E.WriteINDoc(); 
+                 break;
+                 default:
+                 E.WriteINDoc();
+                 System.exit(0);
+                 break;
+            }
+        }
+        while(true);
     } 
 }

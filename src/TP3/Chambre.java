@@ -57,4 +57,24 @@ public class Chambre implements Comparable {
     public Boolean Test_num(int num){
         return num==this.num;
     }
+    @Override
+    public boolean equals(Object obj) {
+        return ((Chambre)obj).num==this.num;
+    }
+     public void set_libre()
+     {
+        etat='L';
+     }
+     public void set_ocuper(){
+         
+         etat='O';
+     }
+     public boolean is_libre()
+     {
+         return etat=='L';
+     }
+     public double Get_prix(){
+         return Prix;
+     }
+
 }
