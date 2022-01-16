@@ -259,7 +259,8 @@ public class Hotel {
 			System.out.println("donner votre choix :");
 			try {
 				choix=Integer.parseInt(Sn.nextLine());
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) 
+            {
 				System.out.println("Error n'est pas un nombre");
 			}
             switch (choix) 
