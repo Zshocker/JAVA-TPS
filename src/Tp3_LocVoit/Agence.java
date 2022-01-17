@@ -1,27 +1,28 @@
 package Tp3_LocVoit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 
-import org.omg.IOP.ExceptionDetailMessage;
 
 public class Agence {
     List<Voiture> voitures=new ArrayList<Voiture>();
-    Map<Client,Voiture> Location = new HashMap<Client,Voiture>();
-    
+    Map<Client,Voiture> Location = new TreeMap<Client,Voiture>();
     public Agence() {
     }
     public boolean estLoueur(Client client)
     {
-        return Location.get(client)!=null;
+        return Location.containsKey(client);
     }
     public boolean estLoue(Voiture v)
     {
-        List<Voiture> ga=(List<Voiture>)Location.values();
-        return ga.indexOf(v)!=-1;
+        Collection<Voiture> ga=Location.values();
+        return ga.contains(v);
     }
     public boolean exist(Voiture v)
     {
@@ -36,7 +37,15 @@ public class Agence {
         if(estLoueur(client))throw new ClientDejaLoueur();
         if(estLoue(v))throw new VoitureDejaAlouer();
         Location.put(client, v);
-    }     
+    } 
+    public void loueVoiture_ParInd(Client client,int indiceVoi)
+    {
+        try {
+            loueVoiture(client, voitures.get(indiceVoi));
+        } catch (VoitureDejaAlouer | ClientDejaLoueur | VoitureNexistePas e) {
+            System.out.println(e);
+        }
+    }    
     public void rendVoiture(Client client) throws ClientNestPasLoeur
     {
         if(estLoueur(client)){
@@ -55,6 +64,11 @@ public class Agence {
             }
         } 
     }
+    public Iterator<Client> lesLoueur()
+    {
+        Set<Client> Cn= Location.keySet();
+        return Cn.iterator();
+    }
     public Iterator<Voiture> selectionne(Critere c)
     {
         List<Voiture> selected=new ArrayList<Voiture>();
@@ -72,8 +86,11 @@ public class Agence {
             System.out.println(ite.next()); 
        }
     }
+    public Iterator<Voiture> tousLesVoitures(){
+        return voitures.iterator();
+    }
     public Iterator<Voiture> lesVoituresLouees(){
-        List<Voiture> ga=(List<Voiture>)Location.values();
+        Collection<Voiture> ga=Location.values();
         return ga.iterator();
     }
     class VoitureDejaAlouer extends Exception{
@@ -102,16 +119,121 @@ public class Agence {
     } 
     public static void main(String[] args) {
         Agence ag= new Agence();
-        
+        Scanner snScanner=new Scanner(System.in);
         ag.addVoiture(new Voiture("Dacia","Logan",175,2015),new Voiture("Renaut", "Megan", 99, 2009), new Voiture("Renaut","Clio",99,2009));
-        //q5
-        //ag.afficheSelection(new CriterePrix(100));
-        //q7
-        InterCritere inte = new InterCritere();
-        inte.addCritere(new CritereAnne(2009),new CriterePrix(100),new CritereMarque("Renaut"));
-        ag.afficheSelection(inte);
+        System.out.println("1-Ajouter une voiture");
+		System.out.println("2-Louer une voiture a un client");
+		System.out.println("3-rend une voiture");
+		System.out.println("4-afficher la liste des voitures");
+		System.out.println("5-afficher la liste des voitures louer");
+		System.out.println("6-afficher la liste des loueurs");
+		System.out.println("7-afficher la liste des voitures par des critere");
+		System.out.println("other-exit");
+        int choix;
+        Client se;
+        Iterator it;
+        do 
+		{
+			choix=5000;
+			System.out.println("donner votre choix :");
+			try {
+				choix=Integer.parseInt(snScanner.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Error n'est pas un nombre");
+			}
+			switch (choix) {
+			case 5000:
+				break;
+				case 1:
+                    ag.addVoiture(Voiture.create_Voiture(snScanner));
+					break;
+				case 2:
+                    choix=-1;
+                    se=Client.creer_client(snScanner);
+                    it=ag.tousLesVoitures();
+                    int i=0;
+                    while (it.hasNext()) {
+                        System.out.print("{"+i+"}");
+                        System.out.println(it.next());
+                        i++;
+                    }
+				    System.out.println("choisissez une voiture par l'indice");
+                    do{
+                        try {
+                           choix =snScanner.nextInt();
+                           if(choix<0||choix>i){
+                            System.out.println("l'indice doit etre entre 0 et "+i);
+                           }else break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }  
+                    }while(true);
+                    ag.loueVoiture_ParInd(se, choix);
+					break;
+				case 3:
+                    se=Client.creer_client(snScanner);
+                    try {
+                        ag.rendVoiture(se);
+                    } catch (ClientNestPasLoeur e) {
+                        System.out.println(e);
+                    }
+					break;
+				case 4:
+                    it=ag.tousLesVoitures();
+                    while (it.hasNext()) {
+                        System.out.println(it.next());
+                    }
+					break;	
+				case 5:
+					it=ag.lesVoituresLouees();
+                    while (it.hasNext()) {
+                        System.out.println(it.next());
+                    }
+				 	break;	
+				case 6:
+					it=ag.lesLoueur();
+                    while (it.hasNext()) {
+                        System.out.println(it.next());
+                    }
+				 	break;	
+				case 7:
+                    InterCritere critere=new InterCritere();
+                    System.out.println("Donner le critere de Marque (0 pour aucune critere):");
+                    String s=snScanner.nextLine();
+                    if(!s.equals("0")){
+                        critere.addCritere(new CritereMarque(s));
+                    }
+                    System.out.println("Donner le critere d'annes de prodcution (0 pour un critere vide):");
+                    do{
+                        try {
+                            choix =snScanner.nextInt();
+                            if(choix!=0){
+                                critere.addCritere(new CritereAnne(choix));
+                            }
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }  
+                    }while(true);
+                    System.out.println("Donner le critere du prix (0 pour aucune critere)");
+                    do{
+                        try {
+                            choix =snScanner.nextInt();
+                            if(choix!=0){
+                                critere.addCritere(new CriterePrix(choix));
+                            }
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error n'est pas un nombre");
+                        }  
+                    }while(true);
+                    ag.afficheSelection(critere);
+				 	break;	
+				default:
+		            snScanner.close();
+                    System.exit(0);
+					break;
+			}
+		} while (true);
     }
-    
-   
-    
 }

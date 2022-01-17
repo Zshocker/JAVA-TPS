@@ -1,9 +1,37 @@
 package Tp3_LocVoit;
 
+import java.util.Scanner;
+
 public class Voiture {
     private String Marque,Model;
     private int prixJ,anneeProduction;
-
+    public static Voiture create_Voiture(Scanner sn)
+    {
+        Voiture nb=new Voiture();
+        System.out.print("\nMarque= ");
+        nb.Marque=sn.nextLine();
+        System.out.print("Model= ");
+        nb.Model=sn.nextLine();
+        System.out.print("prix de jour= ");
+        nb.prixJ=0;
+        do{
+            try {
+                nb.prixJ =sn.nextInt();
+            } catch (NumberFormatException e) {
+                System.out.println("Error n'est pas un nombre");
+            }  
+        }while(nb.prixJ<=0);
+        System.out.print("annee de Production= ");
+        nb.anneeProduction=0;
+        do{
+            try {
+                nb.anneeProduction =sn.nextInt();
+            } catch (NumberFormatException e) {
+                System.out.println("Error n'est pas un nombre");
+            }  
+        }while(nb.anneeProduction<=0);
+        return nb;
+    } 
     public Voiture() {
     }
     public Voiture(String Marque, String Model, int prixJ, int anneeProduction) {
