@@ -99,6 +99,7 @@ public class Hotel {
             for (Chambre chambre : TabC) {
                 chambre.Write_in_buffer(out);
             }
+            out.flush();
         } catch (FileNotFoundException e) 
         {
         } catch (IOException e) {
