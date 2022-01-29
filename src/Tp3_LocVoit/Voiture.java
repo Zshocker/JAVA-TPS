@@ -65,7 +65,8 @@ public class Voiture {
     public int getPrixJ() {
         return this.prixJ;
     }
-    public int getAnneeProduction() {
+    public int getAnneeProduction() 
+    {
         return this.anneeProduction;
     }
 }
