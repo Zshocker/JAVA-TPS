@@ -1,16 +1,12 @@
 package TP5;
 
+import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
-public class telephone extends Frame implements ActionListener {
-    
-    TextField Field=new TextField();
-    String feature="";
-    class Terminator extends WindowAdapter
-    {
-        Terminator(){}
-        public void windowClosing (WindowEvent e) {System.exit(0);}
-    }
+public class Tele_Applet extends Applet implements ActionListener {
+
+    TextField Field;
+    String feature;
     class MiniTele extends Panel {
         public MiniTele(ActionListener a){
             super();
@@ -36,13 +32,16 @@ public class telephone extends Frame implements ActionListener {
             add(A);
         }
     }
-    public telephone(){
-        super();
+    public void init(){
+        Field= new TextField();
+        feature="";
+    }
+    public void start()
+    {
         this.setLayout(new BorderLayout());
         this.add(Field,BorderLayout.NORTH);
         this.add(new MiniTele(this),BorderLayout.CENTER);
         this.setSize(400, 400);
-        this.addWindowListener(new Terminator());
         this.setVisible(true);
     }
     @Override
@@ -61,7 +60,7 @@ public class telephone extends Frame implements ActionListener {
             feature+=t;  
         }
     }
-    public static void main(String[] args) {
-        new telephone();
-    }
+    public void paint(Graphics g){  
+        g.drawString("welcome",150,150);  
+    }  
 }
