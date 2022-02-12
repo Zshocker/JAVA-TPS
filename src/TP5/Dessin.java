@@ -2,42 +2,60 @@ package TP5;
 
 import java.awt.*;
 import java.awt.event.*;
-class Dessin extends Canvas{
-    public int x,y,z,d;
-    class Mes extends MouseAdapter{
+
+class Dessin extends Canvas {
+    public int x, y, z, d;
+
+    class Mes extends MouseAdapter {
         Canvas Eq;
-        public Mes(Canvas Lis){
-            Eq=Lis;
+
+        public Mes(Canvas Lis) {
+            Eq = Lis;
         }
+
         @Override
         public void mousePressed(MouseEvent e) {
-            x=e.getX();
-            y=e.getY();
+            x = e.getX();
+            y = e.getY();
         }
-      /*  @Override
-        public void mouseDragged(MouseEvent e) {
-            z=e.getX();
-            d=e.getY();
-        }*/
+        /*
+         * @Override
+         * public void mouseDragged(MouseEvent e) {
+         * 
+         * z = e.getX() - x; 
+         * if (z < 0)
+         * e.getX();
+         * d = e.getY() - y;
+         * if (d < 0)
+         * getY();
+         * System.out.println(x + " " + y + " " + z + " " + d);
+         * Eq.repaint();
+         * }
+         */
+
         @Override
-        public void mouseReleased(MouseEvent e) 
-        {
-            z=e.getX()-x;
-            if(z<0)e.getX();
-            d=e.getY()-y;
-            if(d<0)getY();
+        public void mouseReleased(MouseEvent e) {
+            z = e.getX() - x;
+            if (z < 0)
+                e.getX();
+            d = e.getY() - y;
+            if (d < 0)
+                getY();
             Eq.repaint();
         }
     }
+
     Planche mPlanche;
-    public Dessin(Planche mP){
-        mPlanche=mP;
+
+    public Dessin(Planche mP) {
+        mPlanche = mP;
         addMouseListener(new Mes(this));
     }
+
     @Override
     public void paint(Graphics g) {
-        String colore=mPlanche.Malist.getSelectedItem();
-        Color color=null;
+        String colore = mPlanche.Malist.getSelectedItem();
+        Color color = null;
         switch (colore.toLowerCase()) {
             case "black":
                 color = Color.BLACK;
@@ -57,7 +75,7 @@ class Dessin extends Canvas{
             case "green":
                 color = Color.GREEN;
                 break;
-        
+
             case "yellow":
                 color = Color.YELLOW;
                 break;
@@ -80,14 +98,18 @@ class Dessin extends Canvas{
                 color = Color.WHITE;
                 break;
         }
-        g.setColor(color); 
-        String For=mPlanche.formsChoice.getSelectedItem();
-        if(For.equals("Rectangle")){
-           if(!mPlanche.Remplisage.getState()) g.drawRect(x, y, z, d);
-           else g.fillRect(x,  y, z, d);
-        }else{
-            if(!mPlanche.Remplisage.getState())   g.drawOval(x, y, z, d);
-            else g.fillOval(x,  y, z, d);
+        g.setColor(color);
+        String For = mPlanche.formsChoice.getSelectedItem();
+        if (For.equals("Rectangle")) {
+            if (!mPlanche.Remplisage.getState())
+                g.drawRect(x, y, z, d);
+            else
+                g.fillRect(x, y, z, d);
+        } else {
+            if (!mPlanche.Remplisage.getState())
+                g.drawOval(x, y, z, d);
+            else
+                g.fillOval(x, y, z, d);
         }
     }
 }
