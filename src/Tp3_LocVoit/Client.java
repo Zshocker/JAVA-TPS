@@ -61,4 +61,20 @@ public class Client implements Comparable<Client>, Serializable {
         return prenom.compareTo(c.prenom);
     }
 
+    public String getNom() {
+        return this.nom;
+    }
+
+    public String getPrenom() {
+        return this.prenom;
+    }
+
+    public String getCIN() {
+        return this.CIN;
+    }
+
+    public String getCivilite() {
+        return this.civilite;
+    }
+
 }

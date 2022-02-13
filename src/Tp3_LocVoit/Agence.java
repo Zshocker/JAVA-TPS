@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -128,6 +129,19 @@ public class Agence implements Serializable {
         } else
             throw new ClientNestPasLoeur();
     }
+    public void rendVoiture(Voiture v) throws VoitureNexistePas, ClientNestPasLoeur {
+        if (estLoue(v)) 
+        {
+            Set<Entry<Client,Voiture>> as= Location.entrySet();
+            for (Entry<Client,Voiture> ent : as) {
+                if(ent.getValue()==v){
+                    rendVoiture(ent.getKey());
+                    return;
+                }
+            }
+        } else
+            throw new VoitureNexistePas();
+    }
 
     public Agence(List<Voiture> voitures) {
         this.voitures = voitures;
@@ -154,6 +168,15 @@ public class Agence implements Serializable {
             }
         }
         return selected.iterator();
+    }
+    public List<Voiture> selectionne_Vec(Critere c) {
+        List<Voiture> selected = new ArrayList<Voiture>();
+        for (Voiture voiture : voitures) {
+            if (c==null||c.estSatisfaitPar(voiture)) {
+                selected.add(voiture);
+            }
+        }
+        return selected;
     }
 
     public void afficheSelection(Critere c) {
