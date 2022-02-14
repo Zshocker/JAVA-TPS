@@ -3,8 +3,7 @@ package Tp3_LocVoit;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-//import com.formdev.flatlaf.FlatDarculaLaf;
-//import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.*;
 
 import Tp3_LocVoit.Agence.ClientDejaLoueur;
 import Tp3_LocVoit.Agence.ClientNestPasLoeur;
@@ -675,7 +674,7 @@ public class inteface_Agence extends JFrame {
     }
 
     public static void main(String args[]) {
-      //  FlatLightLaf.setup();
+        FlatIntelliJLaf.setup();
         new inteface_Agence();
     }
 
