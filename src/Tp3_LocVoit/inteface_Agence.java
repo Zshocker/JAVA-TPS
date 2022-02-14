@@ -3,8 +3,8 @@ package Tp3_LocVoit;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatLightLaf;
+//import com.formdev.flatlaf.FlatDarculaLaf;
+//import com.formdev.flatlaf.FlatLightLaf;
 
 import Tp3_LocVoit.Agence.ClientDejaLoueur;
 import Tp3_LocVoit.Agence.ClientNestPasLoeur;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 public class inteface_Agence extends JFrame {
-
+    Color bg = null;
     class AjouteClientDiag extends JDialog {
         private JButton jButton1;
         private JTextField jTextField1;
@@ -118,6 +118,8 @@ public class inteface_Agence extends JFrame {
             jTextField7.setText("Annee de Production");
 
             jButton2.setText("Ajouter");
+            jButton2.setBackground(bg.GREEN);
+
             jButton2.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     boolean att = true;
@@ -212,7 +214,7 @@ public class inteface_Agence extends JFrame {
                         JOptionPane.showMessageDialog(getParent(), "Bien Fait!");
                         Refrech_Table();
                     } catch (VoitureDejaAlouer | ClientDejaLoueur | VoitureNexistePas e) {
-                    } finally {
+                       } finally {
                         dispose();
                     }
                 }
@@ -227,7 +229,6 @@ public class inteface_Agence extends JFrame {
             content.add(jButton3);
             setSize(450, 200);
             setLocationRelativeTo(null);
-
             SpringUtilities.makeCompactGrid(content, 3, 2, 6, 6, 6, 30);
             setLocationRelativeTo(null);
             setVisible(true);
@@ -258,6 +259,9 @@ public class inteface_Agence extends JFrame {
             jTextField9 = new JTextField();
             jTextField10 = new JTextField();
             jButton5.setText("Ok");
+            jButton5.setBackground(bg.GREEN);
+            
+
             jButton5.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     CMarque = jTextField10.getText();
@@ -317,6 +321,8 @@ public class inteface_Agence extends JFrame {
             jScrollPane1 = new JScrollPane();
             jTable1 = new JTable();
             jButton6.setText("Ok");
+            jButton6.setBackground(bg.GREEN);
+
             jButton6.addActionListener(new ActionListener() {
 
                 @Override
@@ -361,6 +367,8 @@ public class inteface_Agence extends JFrame {
             jScrollPane1 = new JScrollPane();
             jTable1 = new JTable();
             jButton6.setText("Ok");
+            jButton6.setBackground(bg.GREEN);
+
             jButton6.addActionListener(new ActionListener() {
 
                 @Override
@@ -406,6 +414,7 @@ public class inteface_Agence extends JFrame {
             while (clis.hasNext())
                 jComboBox4.addItem(clis.next().getCIN());
             jButton11.setText("Rendre");
+            jButton11.setBackground(bg.GREEN);
             jButton11.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     try {
@@ -427,7 +436,7 @@ public class inteface_Agence extends JFrame {
             pan.add(jLabel6);
             pan.add(jComboBox4);
             SpringUtilities.makeCompactGrid(pan, 1, 2, 6, 6, 6, 1);
-            pack();
+            setSize(300,100);
             setLocationRelativeTo(null);
             setVisible(true);
         }
@@ -541,6 +550,10 @@ public class inteface_Agence extends JFrame {
             i++;
         }
         jTable2.setModel(new DefaultTableModel(sq, new String[] { "Loeur", "Voiture louer" }));
+       // Jtable2.setColor("Blue");
+        jTable2.setBackground(bg.PINK);
+        jTable2.setSize(300,330);
+
         jTable2.disable();
     }
 
@@ -548,7 +561,8 @@ public class inteface_Agence extends JFrame {
     private JMenuItem jButton10, jButton12, jButton13, jButton7, jButton8, jButton9, jButton14, jButton15, jButton16;
     private JScrollPane jScrollPane2;
     JTable jTable2;
-
+    JLabel jLabel5 ; 
+    
     public inteface_Agence() {
         super("Agence");
         ag = Agence.readAgence("AgenceF");
@@ -563,7 +577,7 @@ public class inteface_Agence extends JFrame {
         jButton14 = new JMenuItem();
         jButton15 = new JMenuItem();
         jButton16 = new JMenuItem();
-
+        jLabel5 = new JLabel("bonkour");
         Refrech_Table();
         jScrollPane2.setViewportView(jTable2);
         jButton14.setText("Afficher les voiture celon des critere");
@@ -645,9 +659,14 @@ public class inteface_Agence extends JFrame {
                 new SupprimerVoiture_Diag(ag.tousLesVoitures());
             }
         });
+
+        jScrollPane2.setSize(100,50);
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
-        container.add(jScrollPane2, BorderLayout.CENTER);
+        container.add(jScrollPane2, BorderLayout.NORTH);
+        
+      
+        
         addWindowListener(new Termin());
         setSize(600, 500);
         setLocationRelativeTo(null);
@@ -656,7 +675,7 @@ public class inteface_Agence extends JFrame {
     }
 
     public static void main(String args[]) {
-        FlatLightLaf.setup();
+      //  FlatLightLaf.setup();
         new inteface_Agence();
     }
 
