@@ -38,12 +38,11 @@ public class Client implements Comparable<Client>, Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " nom='" + nom + "'" +
-                ", prenom='" + prenom + "'" +
-                ", CIN='" + CIN + "'" +
-                ", civilite='" + civilite + "'" +
-                "}";
+        return "" +
+                "N:  " + nom +
+                "  P:  " + prenom +
+                "  CIN:  " + CIN +
+                "  C:  " + civilite;
     }
 
     public Client(String CIN) {

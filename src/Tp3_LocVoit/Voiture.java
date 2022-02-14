@@ -47,12 +47,12 @@ public class Voiture implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " Marque='" + Marque + "'" +
-                ", Model='" + Model + "'" +
-                ", prix de location à la journée ='" + prixJ + "'" +
-                ", année de production ='" + anneeProduction + "'" +
-                "}";
+        return "" +
+                "Ma : " + Marque  +
+                "  Mo :" + Model  +
+                "  Prix : " + prixJ +
+                "  Annee : " + anneeProduction  +
+                "";
     }
 
     @Override
